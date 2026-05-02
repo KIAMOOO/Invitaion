@@ -906,31 +906,40 @@
 
   @media print { .replay, .mute-btn, .start-overlay { display: none; } }
 
-  /* Extra-bold sizes for small mobile screens */
+  /* Bigger, readable sizes for mobile screens */
   @media (max-width: 480px) {
-    .label-top      { font-size: 22px !important; }
-    .age-suffix     { font-size: 30px !important; }
-    .age-jas        { font-size: 36px !important; }
-    .greeting       { font-size: 22px !important; line-height: 1.3 !important; }
-    .body-text      { font-size: 22px !important; line-height: 1.4 !important; }
-    .date-line      { font-size: 32px !important; }
-    .date-sub       { font-size: 20px !important; }
-    .venue          { font-size: 26px !important; }
-    .address        { font-size: 22px !important; line-height: 1.35 !important; }
-    .age-number     { font-size: 95px !important; }
+    .label-top      { font-size: 19px !important; letter-spacing: 0.4em !important; }
+    .age-suffix     { font-size: 26px !important; letter-spacing: 0.35em !important; }
+    .age-jas        { font-size: 32px !important; }
+    .greeting       { font-size: 20px !important; line-height: 1.3 !important; }
+    .body-text      { font-size: 20px !important; line-height: 1.35 !important; margin-top: 0.6vh !important; }
+    .date-line      { font-size: 28px !important; }
+    .date-sub       { font-size: 17px !important; margin-bottom: 0.6vh !important; }
+    .venue          { font-size: 22px !important; }
+    .address        { font-size: 19px !important; line-height: 1.3 !important; }
+    .age-number     { font-size: 84px !important; }
+    .medallion      { width: 150px !important; }
     .content        { padding: 4% 4% 4% !important; }
+    .ornate-divider { margin: 0.7vh auto !important; }
+    .ornate-divider.small { margin: 0.8vh auto 0.5vh !important; }
   }
   @media (max-width: 380px) {
-    .label-top      { font-size: 20px !important; }
-    .age-suffix     { font-size: 26px !important; }
-    .age-jas        { font-size: 32px !important; }
-    .greeting       { font-size: 20px !important; }
-    .body-text      { font-size: 20px !important; }
-    .date-line      { font-size: 28px !important; }
-    .date-sub       { font-size: 18px !important; }
-    .venue          { font-size: 22px !important; }
-    .address        { font-size: 20px !important; }
-    .age-number     { font-size: 80px !important; }
+    .label-top      { font-size: 17px !important; }
+    .age-suffix     { font-size: 22px !important; }
+    .age-jas        { font-size: 28px !important; }
+    .greeting       { font-size: 18px !important; }
+    .body-text      { font-size: 18px !important; }
+    .date-line      { font-size: 24px !important; }
+    .date-sub       { font-size: 16px !important; }
+    .venue          { font-size: 20px !important; }
+    .address        { font-size: 17px !important; }
+    .age-number     { font-size: 72px !important; }
+    .medallion      { width: 130px !important; }
+  }
+  @media (max-height: 700px) and (max-width: 480px) {
+    .age-number     { font-size: 70px !important; }
+    .medallion      { width: 120px !important; }
+    .label-top      { font-size: 16px !important; margin-bottom: 0 !important; }
   }
 </style>
 </head>
@@ -1271,7 +1280,10 @@
         <div class="date-line">04.07.2026 <span class="sep">◆</span> 17:00</div>
         <div class="date-sub">сенбі күні</div>
         <div class="venue">«Самир 1» мейрамханасы</div>
-        <div class="address">Алматы қ., Егінсу көшесі, 29/11А, 2-қабат</div>
+        <div class="address">
+          Алматы қ., Егінсу көшесі,<br>
+          29/11А, 2-қабат
+        </div>
       </div>
     </div>
 
