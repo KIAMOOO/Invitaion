@@ -1250,6 +1250,14 @@
   let bokeh = [];
   let sparks = [];
 
+  // Pause state (declared early to avoid TDZ error in tick())
+  let isPaused = false;
+  let started = false;
+  let loopTimer = null;
+  let cycleStartTime = 0;
+  let pausedRemaining = 0;
+  const CYCLE_MS = 21000;
+
   function resize() {
     const frame = document.getElementById('frame');
     const r = frame.getBoundingClientRect();
@@ -1420,12 +1428,6 @@
   }
 
   // === Music control + start overlay ===
-  let started = false;
-  let loopTimer = null;
-  let isPaused = false;
-  let cycleStartTime = 0;
-  let pausedRemaining = 0;
-  const CYCLE_MS = 21000;
   const audio = document.getElementById('bgMusic');
   audio.volume = 0.55;
 
