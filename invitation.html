@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8" />
+<title>Сағибек — 80 жас</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Marck+Script&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold-1: #d4a857;
+    --gold-2: #f0c97a;
+    --gold-3: #fff1c2;
+    --gold-deep: #8a6420;
+    --gold-bright: #ffd86b;
+    --burgundy-1: #2d0a08;
+    --burgundy-2: #4a1414;
+    --burgundy-3: #6b1f1d;
+    --cream: #fff4d8;
+    --emerald: #1a3a2e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+  }
+
+  .frame {
+    position: relative;
+    width: min(100vh * 0.5625, 100vw);
+    height: min(100vw * 1.7778, 100vh);
+    overflow: hidden;
+    box-shadow: 0 0 100px rgba(0,0,0,0.9);
+  }
+
+  /* ============ DEEP BACKGROUND ============ */
+  .bg-deep {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 35%,
+        #6b2a1a 0%,
+        #3a0f0a 45%,
+        #1a0606 100%);
+  }
+
+  /* Slow zoom on entire scene (Ken Burns) */
+  .scene {
+    position: absolute;
+    inset: -8%;
+    animation: kenBurns 22s ease-out forwards;
+    transform-origin: 50% 45%;
+  }
+  @keyframes kenBurns {
+    0%   { transform: scale(1.18) translate(2%, 2%); filter: brightness(0.7); }
+    18%  { transform: scale(1.14) translate(1%, 1%); filter: brightness(1); }
+    100% { transform: scale(1.0)  translate(0, 0);   filter: brightness(1); }
+  }
+
+  /* Rotating mandala in background */
+  .mandala {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 180%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation:
+      mandalaIn 2.5s ease-out 0.4s forwards,
+      mandalaRotate 90s linear infinite;
+    mix-blend-mode: screen;
+  }
+  @keyframes mandalaIn {
+    from { opacity: 0; }
+    to   { opacity: 0.28; }
+  }
+  @keyframes mandalaRotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .mandala svg { width: 100%; height: 100%; }
+
+  /* Counter-rotating outer ring */
+  .mandala-2 {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 220%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation:
+      mandala2In 3s ease-out 0.8s forwards,
+      mandala2Rotate 140s linear infinite reverse;
+    mix-blend-mode: screen;
+  }
+  @keyframes mandala2In {
+    from { opacity: 0; }
+    to   { opacity: 0.18; }
+  }
+  @keyframes mandala2Rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .mandala-2 svg { width: 100%; height: 100%; }
+
+  /* God rays / light beams from top */
+  .rays {
+    position: absolute;
+    top: -10%; left: 50%;
+    width: 130%;
+    height: 90%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    opacity: 0;
+    animation: raysIn 3s ease-out 0.5s forwards;
+    mix-blend-mode: screen;
+  }
+  @keyframes raysIn {
+    from { opacity: 0; }
+    to   { opacity: 0.55; }
+  }
+  .rays::before, .rays::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      conic-gradient(from 200deg at 50% 0%,
+        transparent 0deg,
+        rgba(255, 200, 110, 0.0) 30deg,
+        rgba(255, 220, 140, 0.18) 50deg,
+        rgba(255, 200, 110, 0) 70deg,
+        transparent 90deg,
+        rgba(255, 220, 140, 0.22) 110deg,
+        rgba(255, 200, 110, 0) 130deg,
+        transparent 360deg);
+    filter: blur(8px);
+    animation: raysShimmer 8s ease-in-out infinite alternate;
+  }
+  .rays::after {
+    transform: scaleX(-1);
+    animation-delay: -4s;
+  }
+  @keyframes raysShimmer {
+    0%   { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  /* Central glow */
+  .glow {
+    position: absolute;
+    top: 30%; left: 50%;
+    width: 70%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle,
+      rgba(255, 220, 140, 0.5) 0%,
+      rgba(255, 180, 80, 0.25) 25%,
+      rgba(255, 100, 50, 0.05) 55%,
+      transparent 75%);
+    filter: blur(30px);
+    pointer-events: none;
+    animation: glowPulse 6s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
+  }
+
+  /* Bottom mist / smoke */
+  .mist {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(80, 30, 15, 0.4) 50%,
+      rgba(40, 10, 5, 0.7) 100%);
+    pointer-events: none;
+    animation: mistMove 14s ease-in-out infinite alternate;
+  }
+  @keyframes mistMove {
+    0%   { transform: translateX(-3%); opacity: 0.7; }
+    100% { transform: translateX(3%);  opacity: 1; }
+  }
+
+  /* Texture overlay */
+  .texture {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg,
+        rgba(255,220,160,0.025) 0px,
+        rgba(255,220,160,0.025) 1px,
+        transparent 1px,
+        transparent 4px),
+      repeating-linear-gradient(-45deg,
+        rgba(0,0,0,0.04) 0px,
+        rgba(0,0,0,0.04) 1px,
+        transparent 1px,
+        transparent 5px);
+    mix-blend-mode: overlay;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.85) 100%);
+    pointer-events: none;
+  }
+
+  /* Initial flash of light */
+  .flash {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 45%, #fff8d8 0%, #ffd97a 30%, transparent 70%);
+    opacity: 0;
+    animation: flashIn 1.6s ease-out forwards;
+    z-index: 50;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+  @keyframes flashIn {
+    0%   { opacity: 0; transform: scale(0.5); }
+    25%  { opacity: 1; transform: scale(1.5); }
+    60%  { opacity: 0.5; }
+    100% { opacity: 0; transform: scale(2); }
+  }
+
+  /* Particles */
+  #particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    z-index: 6;
+  }
+
+  /* ============ ORNAMENTAL FRAME ============ */
+  .ornament-frame {
+    position: absolute;
+    inset: 3.5%;
+    pointer-events: none;
+    z-index: 4;
+  }
+  .ornament-frame svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 8px rgba(255, 200, 110, 0.6));
+  }
+  .ornament-frame path,
+  .ornament-frame rect,
+  .ornament-frame circle {
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    animation: drawLine 2.5s ease-out 0.6s forwards;
+  }
+  @keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Corner ornaments */
+  .corner {
+    position: absolute;
+    width: 24%;
+    aspect-ratio: 1;
+    opacity: 0;
+    z-index: 5;
+    animation: cornerIn 1.4s cubic-bezier(.2,.7,.3,1) 1.6s forwards;
+    filter: drop-shadow(0 0 10px rgba(255, 200, 110, 0.7));
+  }
+  @keyframes cornerIn {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .corner.tl { top: 4.5%; left: 4.5%; transform-origin: top left; }
+  .corner.tr { top: 4.5%; right: 4.5%; transform-origin: top right; }
+  .corner.tr svg { transform: scaleX(-1); }
+  .corner.bl { bottom: 4.5%; left: 4.5%; transform-origin: bottom left; }
+  .corner.bl svg { transform: scaleY(-1); }
+  .corner.br { bottom: 4.5%; right: 4.5%; transform-origin: bottom right; }
+  .corner.br svg { transform: scale(-1, -1); }
+
+  /* ============ CONTENT ============ */
+  .content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6% 5% 6%;
+    z-index: 10;
+  }
+
+  .label-top {
+    font-family: 'Marck Script', cursive;
+    font-size: clamp(20px, 3.2vh, 40px);
+    background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.2em;
+    opacity: 0;
+    animation: fadeUp 1.4s cubic-bezier(.2,.7,.3,1) 2.8s forwards;
+    margin-bottom: 0.5vh;
+    text-shadow: 0 0 22px rgba(255, 200, 110, 0.7);
+  }
+
+  /* Medallion around "80" */
+  .medallion {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(150px, 24vh, 280px);
+    aspect-ratio: 1;
+    margin: 0.3vh 0 0.3vh 0;
+    opacity: 0;
+    animation: medallionIn 1.8s cubic-bezier(.2,.8,.3,1) 3.0s forwards;
+  }
+  @keyframes medallionIn {
+    0%   { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  .medallion-ring {
+    position: absolute;
+    inset: 0;
+    animation: ringRotate 40s linear infinite;
+  }
+  @keyframes ringRotate {
+    from { transform: rotate(0); }
+    to   { transform: rotate(360deg); }
+  }
+  .medallion-ring-2 {
+    position: absolute;
+    inset: 8%;
+    animation: ringRotate 60s linear infinite reverse;
+    opacity: 0.7;
+  }
+  .medallion svg { width: 100%; height: 100%; }
+
+  .age-number {
+    position: relative;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: clamp(70px, 15vh, 200px);
+    line-height: 1;
+    background: linear-gradient(180deg,
+      #fff4d0 0%,
+      #ffd86b 25%,
+      #d4a857 50%,
+      #ffd86b 75%,
+      #8a6420 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+      0 0 40px rgba(255, 200, 110, 0.6),
+      0 4px 8px rgba(0,0,0,0.5);
+    letter-spacing: 0.02em;
+    z-index: 2;
+    animation: numberShine 4s ease-in-out infinite alternate;
+  }
+  @keyframes numberShine {
+    0%   { filter: brightness(1) drop-shadow(0 0 12px rgba(255,200,110,.6)); }
+    100% { filter: brightness(1.15) drop-shadow(0 0 24px rgba(255,220,140,.9)); }
+  }
+
+  .age-suffix {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(24px, 3.6vh, 44px);
+    background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-top: 0.5vh;
+    opacity: 0;
+    animation: fadeUp 1.2s cubic-bezier(.2,.7,.3,1) 3.5s forwards;
+    text-shadow: 0 0 22px rgba(255, 200, 110, 0.6);
+  }
+
+  .age-jas {
+    font-family: 'Marck Script', cursive;
+    font-weight: 400;
+    font-size: clamp(26px, 4.0vh, 50px);
+    background: linear-gradient(180deg, #fff4d0, #ffd86b 40%, #d4a857);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.04em;
+    margin-top: 0.4vh;
+    opacity: 0;
+    animation: fadeUp 1.2s cubic-bezier(.2,.7,.3,1) 3.8s forwards;
+    text-shadow: 0 0 24px rgba(255, 200, 110, 0.8);
+    position: relative;
+  }
+  .age-jas::before,
+  .age-jas::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 22px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-2));
+  }
+  .age-jas::before { right: 100%; margin-right: 14px; transform: scaleX(-1); }
+  .age-jas::after  { left: 100%;  margin-left: 14px; }
+
+  .ornate-divider {
+    width: 0;
+    margin: 1.3vh auto 1.3vh;
+    height: 18px;
+    position: relative;
+    animation: dividerGrow 1.4s ease-out 4.0s forwards;
+  }
+  @keyframes dividerGrow {
+    to { width: 80%; }
+  }
+  .ornate-divider::before,
+  .ornate-divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 12px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-2), var(--gold-bright), var(--gold-2), transparent);
+  }
+  .ornate-divider::before { left: 0; }
+  .ornate-divider::after  { right: 0; }
+  .ornate-divider-diamond {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+    box-shadow: 0 0 12px rgba(255, 200, 110, 0.8);
+  }
+
+  .greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(18px, 2.6vh, 30px);
+    line-height: 1.4;
+    color: var(--gold-3);
+    opacity: 0;
+    animation: fadeUp 1.2s cubic-bezier(.2,.7,.3,1) 4.4s forwards;
+    text-shadow: 0 0 18px rgba(255, 200, 110, 0.5), 0 1px 4px rgba(0,0,0,0.6);
+  }
+
+  .body-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(18px, 2.6vh, 30px);
+    line-height: 1.5;
+    color: var(--cream);
+    margin-top: 1.2vh;
+    max-width: 94%;
+    opacity: 0;
+    animation: fadeUp 1.8s cubic-bezier(.2,.7,.3,1) 5.4s forwards;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+  }
+
+  .body-text .accent {
+    color: var(--gold-bright);
+    font-weight: 700;
+    font-style: italic;
+    text-shadow: 0 0 12px rgba(255, 200, 110, 0.7);
+  }
+
+  .ornate-divider.small {
+    margin: 1.6vh auto 1.3vh;
+    animation: dividerGrow 1.4s ease-out 7.0s forwards;
+  }
+
+  .details {
+    opacity: 0;
+    animation: fadeUp 1.8s cubic-bezier(.2,.7,.3,1) 7.4s forwards;
+  }
+
+  .date-line {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(24px, 3.8vh, 48px);
+    background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2vh;
+    text-shadow: 0 0 22px rgba(255, 200, 110, 0.6);
+  }
+  .date-line .sep {
+    -webkit-text-fill-color: var(--gold-1);
+    color: var(--gold-1);
+    margin: 0 0.5em;
+    font-weight: 300;
+    font-size: 0.85em;
+  }
+
+  .venue {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(20px, 3.0vh, 36px);
+    color: var(--cream);
+    margin-bottom: 0.7vh;
+    text-shadow: 0 0 14px rgba(255, 200, 110, 0.4), 0 1px 6px rgba(0,0,0,0.7);
+  }
+
+  .address {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(17px, 2.55vh, 30px);
+    color: #fff8e3;
+    opacity: 1;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    text-shadow:
+      0 0 14px rgba(0, 0, 0, 0.95),
+      0 0 8px rgba(0, 0, 0, 0.9),
+      0 2px 6px rgba(0, 0, 0, 0.9),
+      0 0 18px rgba(255, 200, 110, 0.25);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Replay button */
+  .replay {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.6);
+    color: var(--gold-3);
+    border: 1px solid var(--gold-1);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.3s;
+  }
+  .replay:hover { background: var(--gold-1); color: #000; }
+
+  /* Mute button */
+  .mute-btn {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(0,0,0,0.6);
+    color: var(--gold-3);
+    border: 1px solid var(--gold-1);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .mute-btn:hover { background: var(--gold-1); color: #000; }
+
+  /* Pause button */
+  .pause-btn {
+    position: fixed;
+    bottom: 16px;
+    left: 70px;
+    background: rgba(0,0,0,0.6);
+    color: var(--gold-3);
+    border: 1px solid var(--gold-1);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-family: 'Cinzel', serif;
+    line-height: 1;
+  }
+  .pause-btn:hover { background: var(--gold-1); color: #000; }
+
+  /* Pause state — freezes all CSS animations inside the frame */
+  body.paused #frame,
+  body.paused #frame *,
+  body.paused #frame *::before,
+  body.paused #frame *::after {
+    animation-play-state: paused !important;
+  }
+
+  /* Download button */
+  .download-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #d4a857, #8a6420);
+    color: #fff;
+    border: 1px solid var(--gold-2);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.3s;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 12px rgba(255, 200, 110, 0.4);
+    letter-spacing: 0.05em;
+  }
+  .download-btn:hover {
+    background: linear-gradient(135deg, #ffd86b, #d4a857);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 20px rgba(255, 200, 110, 0.7);
+  }
+  .download-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Recording overlay (only used BEFORE and AFTER recording, not during) */
+  .rec-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1500;
+    color: var(--cream);
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+    padding: 20px;
+  }
+  .rec-overlay.show { display: flex; }
+
+  /* Small floating recording indicator (visible during recording, outside 9:16 area) */
+  .rec-indicator {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    background: rgba(0,0,0,0.85);
+    border: 2px solid #ff3030;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    z-index: 1400;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+  }
+  .rec-indicator.show { display: flex; }
+  .rec-indicator-dot {
+    width: 12px;
+    height: 12px;
+    background: #ff3030;
+    border-radius: 50%;
+    animation: recPulse 1s ease-in-out infinite;
+    box-shadow: 0 0 10px #ff3030;
+  }
+  .rec-overlay h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold-2);
+    font-size: clamp(20px, 3vh, 32px);
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+  .rec-overlay p {
+    font-size: clamp(14px, 2vh, 20px);
+    color: var(--cream);
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 8px 0;
+  }
+  .rec-overlay .step {
+    background: rgba(212, 168, 87, 0.1);
+    border: 1px solid var(--gold-1);
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin: 8px 0;
+    color: var(--gold-3);
+  }
+  .rec-overlay .countdown {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(40px, 8vh, 88px);
+    color: var(--gold-bright);
+    margin: 20px 0;
+    text-shadow: 0 0 30px rgba(255, 200, 110, 0.7);
+    font-weight: 700;
+  }
+  .rec-overlay .rec-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: #ff3030;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: recPulse 1s ease-in-out infinite;
+    vertical-align: middle;
+  }
+  @keyframes recPulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+  .rec-overlay button {
+    background: var(--gold-1);
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  /* Start overlay */
+  .start-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(40, 15, 10, 0.95), rgba(0,0,0,0.98));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .start-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .start-overlay-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vh, 56px);
+    background: linear-gradient(180deg, #fff4d0, #ffd86b 50%, #8a6420);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.15em;
+    text-align: center;
+    margin-bottom: 4vh;
+    text-shadow: 0 0 30px rgba(255, 200, 110, 0.5);
+    animation: pulseTitle 2.5s ease-in-out infinite alternate;
+  }
+  @keyframes pulseTitle {
+    0%   { filter: brightness(1) drop-shadow(0 0 12px rgba(255,200,110,.4)); }
+    100% { filter: brightness(1.15) drop-shadow(0 0 28px rgba(255,220,140,.8)); }
+  }
+  .start-btn {
+    width: clamp(110px, 18vh, 160px);
+    height: clamp(110px, 18vh, 160px);
+    border-radius: 50%;
+    border: 2px solid var(--gold-2);
+    background: radial-gradient(circle at 35% 35%, #ffd86b, #d4a857 50%, #8a6420);
+    color: #2a1a08;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 40px rgba(255, 200, 110, 0.6),
+      0 0 80px rgba(255, 200, 110, 0.3),
+      inset 0 -8px 20px rgba(120, 70, 20, 0.5),
+      inset 0 8px 20px rgba(255, 240, 200, 0.4);
+    transition: all 0.3s ease;
+    position: relative;
+    animation: btnPulse 2s ease-in-out infinite;
+  }
+  .start-btn::before {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-1);
+    opacity: 0.6;
+    animation: btnRing 3s ease-in-out infinite;
+  }
+  @keyframes btnPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+  }
+  @keyframes btnRing {
+    0%   { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.4); opacity: 0; }
+  }
+  .start-btn:hover {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 60px rgba(255, 220, 140, 0.8),
+      0 0 120px rgba(255, 200, 110, 0.5),
+      inset 0 -8px 20px rgba(120, 70, 20, 0.5),
+      inset 0 8px 20px rgba(255, 240, 200, 0.5);
+  }
+  .start-btn svg {
+    width: 40%;
+    height: 40%;
+    margin-left: 8%;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  }
+  .start-hint {
+    margin-top: 3vh;
+    color: var(--gold-3);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(14px, 2.2vh, 22px);
+    opacity: 0.8;
+    letter-spacing: 0.1em;
+  }
+
+  @media print { .replay, .mute-btn, .start-overlay { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="frame" id="frame">
+
+    <!-- Initial bright flash -->
+    <div class="flash"></div>
+
+    <!-- Scene with Ken Burns -->
+    <div class="scene">
+      <div class="bg-deep"></div>
+
+      <!-- Rotating mandala (counter direction) -->
+      <div class="mandala-2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+          <defs>
+            <radialGradient id="mGrad2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffd97a" stop-opacity="0"/>
+              <stop offset="60%" stop-color="#ffb84a" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#8a4520" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <g fill="none" stroke="url(#mGrad2)" stroke-width="0.8">
+            <circle cx="200" cy="200" r="195"/>
+            <circle cx="200" cy="200" r="170"/>
+            <circle cx="200" cy="200" r="145"/>
+          </g>
+          <!-- Outer petals -->
+          <g fill="none" stroke="#ffc870" stroke-width="0.7" stroke-opacity="0.7">
+            <g id="petalRingOuter">
+              <path d="M200 5 Q 215 60, 200 115 Q 185 60, 200 5 Z"/>
+            </g>
+            <use href="#petalRingOuter" transform="rotate(15 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(30 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(45 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(60 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(75 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(90 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(105 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(120 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(135 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(150 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(165 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(180 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(195 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(210 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(225 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(240 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(255 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(270 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(285 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(300 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(315 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(330 200 200)"/>
+            <use href="#petalRingOuter" transform="rotate(345 200 200)"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Rotating mandala -->
+      <div class="mandala">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+          <defs>
+            <radialGradient id="mGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff4d0" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#ffd86b" stop-opacity="0.7"/>
+              <stop offset="100%" stop-color="#8a6420" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Concentric rings -->
+          <g fill="none" stroke="url(#mGrad)" stroke-width="1">
+            <circle cx="200" cy="200" r="60"/>
+            <circle cx="200" cy="200" r="90"/>
+            <circle cx="200" cy="200" r="120"/>
+          </g>
+          <!-- Petals (kazakh-inspired floral) -->
+          <g fill="none" stroke="#ffd86b" stroke-width="1" stroke-opacity="0.8">
+            <g id="petal">
+              <path d="M200 80 C 215 95, 215 130, 200 145 C 185 130, 185 95, 200 80 Z"/>
+              <circle cx="200" cy="112" r="3" fill="#ffd86b"/>
+            </g>
+            <use href="#petal" transform="rotate(30 200 200)"/>
+            <use href="#petal" transform="rotate(60 200 200)"/>
+            <use href="#petal" transform="rotate(90 200 200)"/>
+            <use href="#petal" transform="rotate(120 200 200)"/>
+            <use href="#petal" transform="rotate(150 200 200)"/>
+            <use href="#petal" transform="rotate(180 200 200)"/>
+            <use href="#petal" transform="rotate(210 200 200)"/>
+            <use href="#petal" transform="rotate(240 200 200)"/>
+            <use href="#petal" transform="rotate(270 200 200)"/>
+            <use href="#petal" transform="rotate(300 200 200)"/>
+            <use href="#petal" transform="rotate(330 200 200)"/>
+          </g>
+          <!-- Inner ram-horn motifs -->
+          <g fill="none" stroke="#ffd86b" stroke-width="1.4" stroke-opacity="0.95">
+            <g id="curl">
+              <path d="M200 158 C 195 168, 205 168, 200 178 C 197 184, 203 184, 200 190"/>
+            </g>
+            <use href="#curl" transform="rotate(0 200 200)"/>
+            <use href="#curl" transform="rotate(60 200 200)"/>
+            <use href="#curl" transform="rotate(120 200 200)"/>
+            <use href="#curl" transform="rotate(180 200 200)"/>
+            <use href="#curl" transform="rotate(240 200 200)"/>
+            <use href="#curl" transform="rotate(300 200 200)"/>
+          </g>
+          <!-- Center -->
+          <circle cx="200" cy="200" r="10" fill="url(#mGrad)" opacity="0.9"/>
+          <circle cx="200" cy="200" r="4"  fill="#fff4d0"/>
+        </svg>
+      </div>
+
+      <!-- God rays -->
+      <div class="rays"></div>
+
+      <!-- Central glow -->
+      <div class="glow"></div>
+
+      <!-- Mist at bottom -->
+      <div class="mist"></div>
+
+      <!-- Texture & vignette -->
+      <div class="texture"></div>
+      <div class="vignette"></div>
+    </div>
+
+    <!-- Particles canvas -->
+    <canvas id="particles"></canvas>
+
+    <!-- Ornamental border -->
+    <div class="ornament-frame">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1067" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="#fff4d0"/>
+            <stop offset="50%"  stop-color="#ffd86b"/>
+            <stop offset="100%" stop-color="#8a6420"/>
+          </linearGradient>
+        </defs>
+        <rect x="6" y="6" width="588" height="1055" rx="10"
+              fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+        <rect x="16" y="16" width="568" height="1035" rx="6"
+              fill="none" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.7"/>
+
+        <!-- Top center medallion -->
+        <g transform="translate(300, 30)" stroke="url(#goldGrad)" fill="none" stroke-width="1.6">
+          <path d="M-50 0 Q -25 -16, 0 0 Q 25 -16, 50 0"/>
+          <path d="M-38 5 Q 0 -18, 38 5" opacity="0.7"/>
+          <circle cx="0" cy="0" r="4" fill="url(#goldGrad)" stroke="none"/>
+          <circle cx="0" cy="0" r="8" stroke-width="0.8" opacity="0.6"/>
+        </g>
+        <g transform="translate(300, 1037)" stroke="url(#goldGrad)" fill="none" stroke-width="1.6">
+          <path d="M-50 0 Q -25 16, 0 0 Q 25 16, 50 0"/>
+          <path d="M-38 -5 Q 0 18, 38 -5" opacity="0.7"/>
+          <circle cx="0" cy="0" r="4" fill="url(#goldGrad)" stroke="none"/>
+          <circle cx="0" cy="0" r="8" stroke-width="0.8" opacity="0.6"/>
+        </g>
+        <g transform="translate(10, 533)" stroke="url(#goldGrad)" fill="none" stroke-width="1.4">
+          <path d="M0 -36 Q 16 -18, 0 0 Q 16 18, 0 36"/>
+          <circle cx="6" cy="0" r="3" fill="url(#goldGrad)" stroke="none"/>
+        </g>
+        <g transform="translate(590, 533)" stroke="url(#goldGrad)" fill="none" stroke-width="1.4">
+          <path d="M0 -36 Q -16 -18, 0 0 Q -16 18, 0 36"/>
+          <circle cx="-6" cy="0" r="3" fill="url(#goldGrad)" stroke="none"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Corner ornaments (қошқар мүйіз) -->
+    <div class="corner tl">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="cgrad1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#fff4d0"/>
+            <stop offset="50%" stop-color="#ffd86b"/>
+            <stop offset="100%" stop-color="#8a6420"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#cgrad1)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M30 30 C 30 75, 75 75, 75 50 C 75 35, 50 35, 50 50 C 50 62, 64 62, 64 52"/>
+          <path d="M30 30 C 75 30, 75 75, 50 75 C 35 75, 35 50, 50 50 C 62 50, 62 64, 52 64"/>
+          <path d="M30 30 L 100 30" opacity="0.7"/>
+          <path d="M30 30 L 30 100" opacity="0.7"/>
+          <path d="M100 30 Q 118 30, 118 48 Q 118 60, 105 60"/>
+          <path d="M30 100 Q 30 118, 48 118 Q 60 118, 60 105"/>
+          <path d="M108 108 Q 115 95, 128 95 Q 142 95, 148 108 Q 142 122, 128 122 Q 115 122, 108 108 Z" fill="url(#cgrad1)" fill-opacity="0.3"/>
+          <circle cx="128" cy="108" r="2.5" fill="url(#cgrad1)" stroke="none"/>
+          <path d="M80 80 Q 95 95, 108 108"/>
+          <!-- Extra flourish -->
+          <path d="M148 108 Q 162 108, 168 122" opacity="0.7"/>
+          <path d="M108 148 Q 108 162, 122 168" opacity="0.7"/>
+          <circle cx="170" cy="125" r="2" fill="url(#cgrad1)" stroke="none"/>
+          <circle cx="125" cy="170" r="2" fill="url(#cgrad1)" stroke="none"/>
+        </g>
+      </svg>
+    </div>
+    <div class="corner tr">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <g fill="none" stroke="url(#cgrad1)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M30 30 C 30 75, 75 75, 75 50 C 75 35, 50 35, 50 50 C 50 62, 64 62, 64 52"/>
+          <path d="M30 30 C 75 30, 75 75, 50 75 C 35 75, 35 50, 50 50 C 62 50, 62 64, 52 64"/>
+          <path d="M30 30 L 100 30" opacity="0.7"/>
+          <path d="M30 30 L 30 100" opacity="0.7"/>
+          <path d="M100 30 Q 118 30, 118 48 Q 118 60, 105 60"/>
+          <path d="M30 100 Q 30 118, 48 118 Q 60 118, 60 105"/>
+          <path d="M108 108 Q 115 95, 128 95 Q 142 95, 148 108 Q 142 122, 128 122 Q 115 122, 108 108 Z" fill="url(#cgrad1)" fill-opacity="0.3"/>
+          <circle cx="128" cy="108" r="2.5" fill="url(#cgrad1)" stroke="none"/>
+          <path d="M80 80 Q 95 95, 108 108"/>
+          <path d="M148 108 Q 162 108, 168 122" opacity="0.7"/>
+          <path d="M108 148 Q 108 162, 122 168" opacity="0.7"/>
+          <circle cx="170" cy="125" r="2" fill="url(#cgrad1)" stroke="none"/>
+          <circle cx="125" cy="170" r="2" fill="url(#cgrad1)" stroke="none"/>
+        </g>
+      </svg>
+    </div>
+    <div class="corner bl">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <g fill="none" stroke="url(#cgrad1)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M30 30 C 30 75, 75 75, 75 50 C 75 35, 50 35, 50 50 C 50 62, 64 62, 64 52"/>
+          <path d="M30 30 C 75 30, 75 75, 50 75 C 35 75, 35 50, 50 50 C 62 50, 62 64, 52 64"/>
+          <path d="M30 30 L 100 30" opacity="0.7"/>
+          <path d="M30 30 L 30 100" opacity="0.7"/>
+          <path d="M100 30 Q 118 30, 118 48 Q 118 60, 105 60"/>
+          <path d="M30 100 Q 30 118, 48 118 Q 60 118, 60 105"/>
+          <path d="M108 108 Q 115 95, 128 95 Q 142 95, 148 108 Q 142 122, 128 122 Q 115 122, 108 108 Z" fill="url(#cgrad1)" fill-opacity="0.3"/>
+          <circle cx="128" cy="108" r="2.5" fill="url(#cgrad1)" stroke="none"/>
+          <path d="M80 80 Q 95 95, 108 108"/>
+          <path d="M148 108 Q 162 108, 168 122" opacity="0.7"/>
+          <path d="M108 148 Q 108 162, 122 168" opacity="0.7"/>
+          <circle cx="170" cy="125" r="2" fill="url(#cgrad1)" stroke="none"/>
+          <circle cx="125" cy="170" r="2" fill="url(#cgrad1)" stroke="none"/>
+        </g>
+      </svg>
+    </div>
+    <div class="corner br">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <g fill="none" stroke="url(#cgrad1)" stroke-width="2.4" stroke-linecap="round">
+          <path d="M30 30 C 30 75, 75 75, 75 50 C 75 35, 50 35, 50 50 C 50 62, 64 62, 64 52"/>
+          <path d="M30 30 C 75 30, 75 75, 50 75 C 35 75, 35 50, 50 50 C 62 50, 62 64, 52 64"/>
+          <path d="M30 30 L 100 30" opacity="0.7"/>
+          <path d="M30 30 L 30 100" opacity="0.7"/>
+          <path d="M100 30 Q 118 30, 118 48 Q 118 60, 105 60"/>
+          <path d="M30 100 Q 30 118, 48 118 Q 60 118, 60 105"/>
+          <path d="M108 108 Q 115 95, 128 95 Q 142 95, 148 108 Q 142 122, 128 122 Q 115 122, 108 108 Z" fill="url(#cgrad1)" fill-opacity="0.3"/>
+          <circle cx="128" cy="108" r="2.5" fill="url(#cgrad1)" stroke="none"/>
+          <path d="M80 80 Q 95 95, 108 108"/>
+          <path d="M148 108 Q 162 108, 168 122" opacity="0.7"/>
+          <path d="M108 148 Q 108 162, 122 168" opacity="0.7"/>
+          <circle cx="170" cy="125" r="2" fill="url(#cgrad1)" stroke="none"/>
+          <circle cx="125" cy="170" r="2" fill="url(#cgrad1)" stroke="none"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="label-top">⋅ мерейтой ⋅</div>
+
+      <div class="medallion">
+        <!-- Outer rotating ring with kazakh ornaments -->
+        <div class="medallion-ring">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+            <defs>
+              <linearGradient id="medGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%"  stop-color="#fff4d0"/>
+                <stop offset="50%" stop-color="#ffd86b"/>
+                <stop offset="100%" stop-color="#8a6420"/>
+              </linearGradient>
+            </defs>
+            <g fill="none" stroke="url(#medGrad)" stroke-width="1.5">
+              <circle cx="200" cy="200" r="195"/>
+              <circle cx="200" cy="200" r="180" stroke-dasharray="2 6" opacity="0.7"/>
+            </g>
+            <!-- 8 ornamental marks around the ring -->
+            <g fill="url(#medGrad)" stroke="none">
+              <g id="mark">
+                <circle cx="200" cy="10" r="4"/>
+                <path d="M200 18 L 195 26 L 200 22 L 205 26 Z" fill="url(#medGrad)"/>
+              </g>
+              <use href="#mark" transform="rotate(45 200 200)"/>
+              <use href="#mark" transform="rotate(90 200 200)"/>
+              <use href="#mark" transform="rotate(135 200 200)"/>
+              <use href="#mark" transform="rotate(180 200 200)"/>
+              <use href="#mark" transform="rotate(225 200 200)"/>
+              <use href="#mark" transform="rotate(270 200 200)"/>
+              <use href="#mark" transform="rotate(315 200 200)"/>
+            </g>
+          </svg>
+        </div>
+        <!-- Inner counter-rotating decoration -->
+        <div class="medallion-ring-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+            <g fill="none" stroke="url(#medGrad)" stroke-width="1.2" opacity="0.85">
+              <circle cx="200" cy="200" r="195"/>
+              <g id="petalSm">
+                <path d="M200 30 Q 210 50, 200 70 Q 190 50, 200 30 Z"/>
+              </g>
+              <use href="#petalSm" transform="rotate(60 200 200)"/>
+              <use href="#petalSm" transform="rotate(120 200 200)"/>
+              <use href="#petalSm" transform="rotate(180 200 200)"/>
+              <use href="#petalSm" transform="rotate(240 200 200)"/>
+              <use href="#petalSm" transform="rotate(300 200 200)"/>
+            </g>
+          </svg>
+        </div>
+        <!-- Number 80 -->
+        <div class="age-number">80</div>
+      </div>
+
+      <div class="age-suffix">Сағибек</div>
+      <div class="age-jas">80 жас</div>
+
+      <div class="ornate-divider">
+        <div class="ornate-divider-diamond"></div>
+      </div>
+
+      <div class="greeting">
+        Құрметті ағайын-туыс, бауырлар,<br>
+        құда-жекжат, нағашылар,<br>
+        құрдастар мен әріптестер!
+      </div>
+
+      <div class="body-text">
+        Сіздерді асқар тау әкеміз
+        <span class="accent">Сағибектің</span>
+        80 жас мерейтойына арнайы жайылған
+        ақ дастарханымыздың қадірлі қонағы
+        болуға шақырамыз!
+      </div>
+
+      <div class="ornate-divider small">
+        <div class="ornate-divider-diamond"></div>
+      </div>
+
+      <div class="details">
+        <div class="date-line">4 шілде <span class="sep">◆</span> 17:00</div>
+        <div class="venue">«Самир» мейрамханасы</div>
+        <div class="address">Алматы қ., Егінсу көшесі, 29/11А, 2-қабат</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Audio: place your music file as music.mp3 next to this HTML (see ИНСТРУКЦИЯ.md) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Start overlay (required to play audio in browsers) -->
+<div class="start-overlay" id="startOverlay">
+  <div class="start-overlay-title">Сағибек ата<br><span style="font-size:0.7em">— 80 жас —</span></div>
+  <button class="start-btn" id="startBtn" aria-label="Бастау">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </button>
+  <div class="start-hint">Бастау үшін басыңыз</div>
+</div>
+
+<button class="mute-btn" id="muteBtn" onclick="toggleMute()" title="Дыбысты қосу/өшіру">🔊</button>
+<button class="pause-btn" id="pauseBtn" onclick="togglePause()" title="Тоқтату / Жалғастыру">⏸</button>
+<button class="replay" onclick="manualReplay()">↻ Қайта көрсету</button>
+<!-- Recording instructions overlay (only before / after recording) -->
+<div class="rec-overlay" id="recOverlay">
+  <div id="recContent"></div>
+</div>
+
+<!-- Small floating recording indicator (during recording) -->
+<div class="rec-indicator" id="recIndicator">
+  <span class="rec-indicator-dot"></span>
+  <span id="recIndicatorText">REC 22</span>
+</div>
+
+<script>
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0;
+  let particles = [];
+  let bokeh = [];
+  let sparks = [];
+
+  function resize() {
+    const frame = document.getElementById('frame');
+    const r = frame.getBoundingClientRect();
+    canvas.width  = r.width  * devicePixelRatio;
+    canvas.height = r.height * devicePixelRatio;
+    canvas.style.width  = r.width  + 'px';
+    canvas.style.height = r.height + 'px';
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    W = r.width; H = r.height;
+  }
+
+  function spawnParticles() {
+    particles = [];
+    bokeh = [];
+    sparks = [];
+
+    // Small fast particles (golden dust)
+    for (let i = 0; i < 90; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 0.6 + Math.random() * 1.8,
+        vy: -0.15 - Math.random() * 0.5,
+        vx: (Math.random() - 0.5) * 0.3,
+        a: 0.3 + Math.random() * 0.7,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.005 + Math.random() * 0.012,
+        hue: 35 + Math.random() * 18
+      });
+    }
+
+    // Big out-of-focus bokeh
+    for (let i = 0; i < 12; i++) {
+      bokeh.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 18 + Math.random() * 28,
+        vy: -0.08 - Math.random() * 0.18,
+        vx: (Math.random() - 0.5) * 0.12,
+        a: 0.08 + Math.random() * 0.18,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.003 + Math.random() * 0.006,
+        hue: 30 + Math.random() * 25
+      });
+    }
+
+    // Random sparks (occasional bright flashes)
+    for (let i = 0; i < 18; i++) {
+      sparks.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        baseA: 0,
+        targetA: 0,
+        r: 1.5 + Math.random() * 2.5,
+        nextSpark: Math.random() * 4000,
+        last: performance.now()
+      });
+    }
+  }
+
+  function tick() {
+    if (isPaused) {
+      requestAnimationFrame(tick);
+      return;
+    }
+    ctx.clearRect(0, 0, W, H);
+
+    // Bokeh first (behind everything)
+    for (const p of bokeh) {
+      p.x += p.vx + Math.sin(p.phase) * 0.15;
+      p.y += p.vy;
+      p.phase += p.speed;
+      if (p.y < -p.r * 2) { p.y = H + p.r; p.x = Math.random() * W; }
+      if (p.x < -p.r * 2) p.x = W + p.r;
+      if (p.x > W + p.r * 2) p.x = -p.r;
+
+      const flicker = 0.7 + 0.3 * Math.sin(p.phase * 1.5);
+      const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+      grad.addColorStop(0,    `hsla(${p.hue}, 90%, 70%, ${p.a * flicker})`);
+      grad.addColorStop(0.4,  `hsla(${p.hue}, 80%, 55%, ${p.a * flicker * 0.4})`);
+      grad.addColorStop(1,    `hsla(${p.hue}, 70%, 40%, 0)`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Small particles
+    for (const p of particles) {
+      p.x += p.vx + Math.sin(p.phase) * 0.4;
+      p.y += p.vy;
+      p.phase += p.speed;
+      if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      if (p.x < -10) p.x = W + 10;
+      if (p.x > W + 10) p.x = -10;
+
+      const flicker = 0.55 + 0.45 * Math.sin(p.phase * 2);
+      const halo = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5);
+      halo.addColorStop(0,   `hsla(${p.hue}, 95%, 80%, ${p.a * flicker})`);
+      halo.addColorStop(0.4, `hsla(${p.hue}, 85%, 60%, ${p.a * flicker * 0.35})`);
+      halo.addColorStop(1,   'hsla(40, 80%, 50%, 0)');
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = `hsla(${p.hue}, 100%, 90%, ${p.a * flicker})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Sparks (bright random twinkles)
+    const now = performance.now();
+    for (const s of sparks) {
+      const dt = now - s.last;
+      s.last = now;
+      s.nextSpark -= dt;
+      if (s.nextSpark <= 0) {
+        s.x = Math.random() * W;
+        s.y = Math.random() * H;
+        s.targetA = 0.8 + Math.random() * 0.2;
+        s.nextSpark = 1500 + Math.random() * 4000;
+      }
+      s.baseA += (s.targetA - s.baseA) * 0.04;
+      s.targetA *= 0.94;
+
+      if (s.baseA > 0.02) {
+        const halo = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 8);
+        halo.addColorStop(0,   `rgba(255, 240, 180, ${s.baseA})`);
+        halo.addColorStop(0.3, `rgba(255, 200, 100, ${s.baseA * 0.5})`);
+        halo.addColorStop(1,   'rgba(255, 180, 80, 0)');
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r * 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cross sparkle
+        ctx.strokeStyle = `rgba(255, 250, 220, ${s.baseA})`;
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(s.x - s.r * 5, s.y); ctx.lineTo(s.x + s.r * 5, s.y);
+        ctx.moveTo(s.x, s.y - s.r * 5); ctx.lineTo(s.x, s.y + s.r * 5);
+        ctx.stroke();
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  resize();
+  spawnParticles();
+  tick();
+  window.addEventListener('resize', () => { resize(); spawnParticles(); });
+
+  // === Restart cycle ===
+  function replay() {
+    const frame = document.getElementById('frame');
+    const clone = frame.cloneNode(true);
+    frame.parentNode.replaceChild(clone, frame);
+    clone.id = 'frame';
+    setTimeout(() => { resize(); spawnParticles(); }, 50);
+  }
+  function manualReplay() {
+    replay();
+    const a = document.getElementById('bgMusic');
+    if (a && started) { a.currentTime = 0; a.play().catch(()=>{}); }
+  }
+
+  // === Music control + start overlay ===
+  let started = false;
+  let loopTimer = null;
+  let isPaused = false;
+  let cycleStartTime = 0;
+  let pausedRemaining = 0;
+  const CYCLE_MS = 21000;
+  const audio = document.getElementById('bgMusic');
+  audio.volume = 0.55;
+
+  // Schedule next replay using setTimeout (so it can be paused)
+  function scheduleNextCycle(delay) {
+    if (loopTimer) clearTimeout(loopTimer);
+    cycleStartTime = Date.now() - (CYCLE_MS - delay);
+    loopTimer = setTimeout(() => {
+      if (isPaused) return;
+      replay();
+      if (!audio.paused && !audio.muted) {
+        audio.currentTime = 0;
+        audio.play().catch(()=>{});
+      }
+      cycleStartTime = Date.now();
+      scheduleNextCycle(CYCLE_MS);
+    }, delay);
+  }
+
+  function startInvitation() {
+    if (started) return;
+    started = true;
+    const overlay = document.getElementById('startOverlay');
+    overlay.classList.add('hidden');
+    setTimeout(() => overlay.style.display = 'none', 900);
+
+    replay();
+    audio.play().catch(err => {
+      console.log('Audio playback blocked or music.mp3 missing:', err);
+    });
+
+    cycleStartTime = Date.now();
+    scheduleNextCycle(CYCLE_MS);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', startInvitation);
+  document.getElementById('startOverlay').addEventListener('click', startInvitation);
+
+  function toggleMute() {
+    const btn = document.getElementById('muteBtn');
+    if (audio.muted || audio.paused) {
+      audio.muted = false;
+      if (!isPaused) audio.play().catch(()=>{});
+      btn.textContent = '🔊';
+    } else {
+      audio.muted = true;
+      btn.textContent = '🔇';
+    }
+  }
+
+  function togglePause() {
+    if (!started) return;
+    const btn = document.getElementById('pauseBtn');
+
+    if (!isPaused) {
+      // === Pause ===
+      document.body.classList.add('paused');
+      audio.pause();
+      if (loopTimer) {
+        clearTimeout(loopTimer);
+        loopTimer = null;
+        const elapsed = Date.now() - cycleStartTime;
+        pausedRemaining = Math.max(CYCLE_MS - elapsed, 200);
+      } else {
+        pausedRemaining = CYCLE_MS;
+      }
+      isPaused = true;
+      btn.textContent = '▶';
+      btn.title = 'Жалғастыру';
+    } else {
+      // === Resume ===
+      isPaused = false;
+      document.body.classList.remove('paused');
+      if (!audio.muted) audio.play().catch(()=>{});
+
+      // Reset spark timing so we don't get a huge time-delta jump
+      const now = performance.now();
+      sparks.forEach(s => s.last = now);
+
+      scheduleNextCycle(pausedRemaining);
+      btn.textContent = '⏸';
+      btn.title = 'Тоқтату';
+    }
+  }
+
+  // ===== VIDEO DOWNLOAD (1080x1920) =====
+  const RECORD_DURATION_MS = 22000;
+  const OUT_W = 1080;
+  const OUT_H = 1920;
+  let isRecording = false;
+
+  function showOverlay(html) {
+    const ov = document.getElementById('recOverlay');
+    document.getElementById('recContent').innerHTML = html;
+    ov.classList.add('show');
+  }
+  function hideOverlay() {
+    document.getElementById('recOverlay').classList.remove('show');
+  }
+
+  async function downloadVideo() {
+    if (isRecording) return;
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+      alert('Ваш браузер не поддерживает запись экрана. Используйте Chrome или Edge последней версии.');
+      return;
+    }
+
+    showOverlay(`
+      <h2>📥 Запись видео 1080 × 1920</h2>
+      <div class="step" style="text-align:left;max-width:520px">
+        <p style="margin-bottom:10px;font-size:1.1em"><b style="color:var(--gold-bright)">1.</b> В появившемся окне будет предложен <b>текущий сайт</b> — нажмите его (или оставьте выделенным).</p>
+        <p style="margin-bottom:10px;font-size:1.1em"><b style="color:var(--gold-bright)">2.</b> ✅ Внизу — поставьте галочку <b>«Также передавать звук»</b> / <b>«Share tab audio»</b>.</p>
+        <p style="font-size:1.1em"><b style="color:var(--gold-bright)">3.</b> Нажмите <b>«Поделиться»</b> / <b>«Share»</b> — запись пойдёт сама 22 сек.</p>
+      </div>
+      <p style="margin-top:14px;color:var(--gold-3)">Видео сохранится в формате <b>1080 × 1920</b> с музыкой, готовое для WhatsApp / Telegram.</p>
+      <button onclick="hideOverlay()">Отмена</button>
+    `);
+
+    // Wait a moment so user can read instructions
+    await new Promise(r => setTimeout(r, 100));
+
+    let displayStream;
+    try {
+      // Modern flags: prefer current tab + auto-include audio
+      const constraints = {
+        video: {
+          displaySurface: 'browser',
+          width:  { ideal: 1920 },
+          height: { ideal: 1920 },
+          frameRate: { ideal: 30 }
+        },
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false
+        },
+        // Chrome 105+ extensions: pre-select current tab and include system audio
+        preferCurrentTab: true,
+        selfBrowserSurface: 'include',
+        surfaceSwitching: 'exclude',
+        systemAudio: 'include'
+      };
+      displayStream = await navigator.mediaDevices.getDisplayMedia(constraints);
+    } catch (err) {
+      // Fallback for older browsers (without modern flags)
+      try {
+        displayStream = await navigator.mediaDevices.getDisplayMedia({
+          video: { width: { ideal: 1920 }, height: { ideal: 1920 }, frameRate: { ideal: 30 } },
+          audio: true
+        });
+      } catch (err2) {
+        hideOverlay();
+        console.warn('getDisplayMedia error:', err2);
+        showOverlay(`
+          <h2>Не удалось начать запись</h2>
+          <p>Браузер не разрешил запись экрана. Используйте Chrome или Edge последней версии.</p>
+          <p style="margin-top:12px;color:var(--gold-3)">Альтернатива: запишите экран через <b>Win + Alt + R</b> (Windows Game Bar).</p>
+          <button onclick="hideOverlay()">Закрыть</button>
+        `);
+        return;
+      }
+    }
+
+    isRecording = true;
+    const dlBtn = document.getElementById('downloadBtn');
+    dlBtn.disabled = true;
+
+    // Source video element from screen capture
+    const srcVideo = document.createElement('video');
+    srcVideo.srcObject = displayStream;
+    srcVideo.muted = true;
+    srcVideo.playsInline = true;
+    await srcVideo.play();
+
+    // Output canvas (always 1080x1920)
+    const outCanvas = document.createElement('canvas');
+    outCanvas.width = OUT_W;
+    outCanvas.height = OUT_H;
+    const outCtx = outCanvas.getContext('2d');
+    outCtx.fillStyle = '#000';
+    outCtx.fillRect(0, 0, OUT_W, OUT_H);
+
+    // Center-crop and scale source to 1080x1920
+    let drawing = true;
+    function drawFrame() {
+      if (!drawing) return;
+      const vw = srcVideo.videoWidth;
+      const vh = srcVideo.videoHeight;
+      if (vw && vh) {
+        const targetAspect = OUT_W / OUT_H;       // 9:16 = 0.5625
+        const sourceAspect = vw / vh;
+        let sx, sy, sw, sh;
+        if (sourceAspect > targetAspect) {
+          // Source wider than 9:16 -> crop horizontally
+          sh = vh;
+          sw = Math.round(vh * targetAspect);
+          sx = Math.round((vw - sw) / 2);
+          sy = 0;
+        } else {
+          // Source taller -> crop vertically
+          sw = vw;
+          sh = Math.round(vw / targetAspect);
+          sx = 0;
+          sy = Math.round((vh - sh) / 2);
+        }
+        outCtx.drawImage(srcVideo, sx, sy, sw, sh, 0, 0, OUT_W, OUT_H);
+      }
+      requestAnimationFrame(drawFrame);
+    }
+    drawFrame();
+
+    // Build combined stream
+    const canvasStream = outCanvas.captureStream(30);
+    displayStream.getAudioTracks().forEach(t => canvasStream.addTrack(t));
+
+    // If display has no audio (user didn't share tab audio), pipe in bgMusic
+    if (canvasStream.getAudioTracks().length === 0) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (!audio._connectedToCtx) {
+          audio._mediaSource = audioCtx.createMediaElementSource(audio);
+          audio._connectedToCtx = audioCtx;
+        }
+        const dest = audio._connectedToCtx.createMediaStreamDestination();
+        audio._mediaSource.connect(dest);
+        audio._mediaSource.connect(audio._connectedToCtx.destination);
+        dest.stream.getAudioTracks().forEach(t => canvasStream.addTrack(t));
+      } catch (e) {
+        console.warn('Could not capture bgMusic audio:', e);
+      }
+    }
+
+    // Choose codec
+    let mimeType = 'video/webm;codecs=vp9,opus';
+    if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm;codecs=vp8,opus';
+    if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
+
+    const recorder = new MediaRecorder(canvasStream, {
+      mimeType,
+      videoBitsPerSecond: 8_000_000,
+      audioBitsPerSecond: 192_000
+    });
+
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data && e.data.size > 0) chunks.push(e.data); };
+    recorder.onstop = () => {
+      drawing = false;
+      displayStream.getTracks().forEach(t => t.stop());
+      canvasStream.getTracks().forEach(t => t.stop());
+
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sagibek-80-jas-1080x1920.webm';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+      isRecording = false;
+      dlBtn.disabled = false;
+      dlBtn.textContent = '📥 Скачать видео 1080×1920';
+
+      showOverlay(`
+        <h2>Видео сохранено! ✓</h2>
+        <p>Файл <b>sagibek-80-jas-1080x1920.webm</b> загружен в папку «Загрузки».</p>
+        <p style="margin-top:10px;color:var(--gold-3)">Если нужен формат MP4 — откройте файл в <b>CapCut</b> или <b>Clipchamp</b> и экспортируйте как MP4. Для WhatsApp/Telegram файл .webm работает напрямую.</p>
+        <button onclick="hideOverlay()">Закрыть</button>
+      `);
+    };
+
+    // Start animation + music from beginning
+    replay();
+    audio.currentTime = 0;
+    audio.play().catch(()=>{});
+
+    // Hide instruction overlay so user sees the animation
+    hideOverlay();
+
+    // Show small floating indicator instead (positioned outside 9:16 capture area)
+    const indicator = document.getElementById('recIndicator');
+    const indicatorText = document.getElementById('recIndicatorText');
+    indicator.classList.add('show');
+
+    // Hide buttons during recording so they don't appear if camera is wider than 9:16
+    const dlBtnEl = document.getElementById('downloadBtn');
+    const replayBtnEl = document.querySelector('.replay');
+    const muteBtnEl = document.getElementById('muteBtn');
+    [dlBtnEl, replayBtnEl, muteBtnEl].forEach(b => b && (b.style.visibility = 'hidden'));
+
+    // Wait briefly for animation/UI to settle
+    setTimeout(() => {
+      recorder.start();
+      let secLeft = Math.round(RECORD_DURATION_MS / 1000);
+      indicatorText.textContent = `REC ${secLeft}`;
+
+      const timer = setInterval(() => {
+        secLeft--;
+        indicatorText.textContent = `REC ${secLeft}`;
+        if (secLeft <= 0) clearInterval(timer);
+      }, 1000);
+
+      const finishRecording = () => {
+        clearInterval(timer);
+        indicator.classList.remove('show');
+        [dlBtnEl, replayBtnEl, muteBtnEl].forEach(b => b && (b.style.visibility = ''));
+      };
+
+      setTimeout(() => {
+        try { recorder.stop(); } catch(e) { console.warn(e); }
+        finishRecording();
+      }, RECORD_DURATION_MS);
+
+      // If user manually stops sharing, also stop recorder
+      displayStream.getVideoTracks()[0].addEventListener('ended', () => {
+        if (recorder.state !== 'inactive') {
+          try { recorder.stop(); } catch(e) {}
+        }
+        finishRecording();
+      });
+    }, 350);
+  }
+</script>
+
+</body>
+</html>
