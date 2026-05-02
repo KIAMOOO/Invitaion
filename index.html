@@ -758,18 +758,23 @@
   .start-overlay {
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(40, 15, 10, 0.95), rgba(0,0,0,0.98));
+    background: radial-gradient(ellipse at center, rgba(40, 15, 10, 0.96), rgba(0,0,0,0.99));
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 9999;
     cursor: pointer;
     transition: opacity 0.8s ease, visibility 0.8s ease;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
   }
   .start-overlay.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
   }
   .start-overlay-title {
     font-family: 'Cinzel', serif;
@@ -807,7 +812,16 @@
       inset 0 8px 20px rgba(255, 240, 200, 0.4);
     transition: all 0.3s ease;
     position: relative;
+    z-index: 10;
     animation: btnPulse 2s ease-in-out infinite;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    padding: 0;
+  }
+  .start-btn:active {
+    transform: scale(0.95);
   }
   .start-btn::before {
     content: "";
@@ -817,6 +831,7 @@
     border: 1px solid var(--gold-1);
     opacity: 0.6;
     animation: btnRing 3s ease-in-out infinite;
+    pointer-events: none;
   }
   @keyframes btnPulse {
     0%, 100% { transform: scale(1); }
@@ -839,6 +854,7 @@
     height: 40%;
     margin-left: 8%;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    pointer-events: none;
   }
   .start-hint {
     margin-top: 3vh;
@@ -1203,7 +1219,7 @@
 
 <!-- Start overlay (required to play audio in browsers) -->
 <div class="start-overlay" id="startOverlay">
-  <div class="start-overlay-title">Сағибек ата<br><span style="font-size:0.7em">— 80 жас —</span></div>
+  <div class="start-overlay-title">Сағибек<br><span style="font-size:0.7em">— 80 жас —</span></div>
   <button class="start-btn" id="startBtn" aria-label="Бастау">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
       <path d="M8 5v14l11-7z"/>
@@ -1445,8 +1461,31 @@
     scheduleNextCycle(CYCLE_MS);
   }
 
-  document.getElementById('startBtn').addEventListener('click', startInvitation);
-  document.getElementById('startOverlay').addEventListener('click', startInvitation);
+  // Robust click/tap handler for both desktop and mobile
+  function attachStartHandlers() {
+    const btn = document.getElementById('startBtn');
+    const ov  = document.getElementById('startOverlay');
+    const handler = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startInvitation();
+    };
+    ['click', 'touchend', 'pointerup'].forEach(ev => {
+      btn.addEventListener(ev, handler, { passive: false });
+      ov.addEventListener(ev, (e) => {
+        if (started) return;
+        startInvitation();
+      });
+    });
+    // Keyboard accessibility (Space / Enter)
+    document.addEventListener('keydown', (e) => {
+      if (!started && (e.code === 'Space' || e.code === 'Enter')) {
+        e.preventDefault();
+        startInvitation();
+      }
+    });
+  }
+  attachStartHandlers();
 
   function toggleMute() {
     const btn = document.getElementById('muteBtn');
