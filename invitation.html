@@ -307,13 +307,13 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 6% 5% 6%;
+    padding: 5% 4% 5%;
     z-index: 10;
   }
 
   .label-top {
     font-family: 'Marck Script', cursive;
-    font-size: clamp(20px, 3.2vh, 40px);
+    font-size: clamp(24px, 3.4vh, 40px);
     background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
     -webkit-background-clip: text;
     background-clip: text;
@@ -331,9 +331,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: clamp(150px, 24vh, 280px);
+    width: clamp(140px, 22vh, 260px);
     aspect-ratio: 1;
-    margin: 0.3vh 0 0.3vh 0;
+    margin: 0.2vh 0 0.2vh 0;
     opacity: 0;
     animation: medallionIn 1.8s cubic-bezier(.2,.8,.3,1) 3.0s forwards;
   }
@@ -362,7 +362,7 @@
     position: relative;
     font-family: 'Cinzel', serif;
     font-weight: 900;
-    font-size: clamp(70px, 15vh, 200px);
+    font-size: clamp(64px, 13vh, 180px);
     line-height: 1;
     background: linear-gradient(180deg,
       #fff4d0 0%,
@@ -388,7 +388,7 @@
   .age-suffix {
     font-family: 'Cinzel', serif;
     font-weight: 700;
-    font-size: clamp(24px, 3.6vh, 44px);
+    font-size: clamp(28px, 3.8vh, 44px);
     background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
     -webkit-background-clip: text;
     background-clip: text;
@@ -404,7 +404,7 @@
   .age-jas {
     font-family: 'Marck Script', cursive;
     font-weight: 400;
-    font-size: clamp(26px, 4.0vh, 50px);
+    font-size: clamp(32px, 4.2vh, 50px);
     background: linear-gradient(180deg, #fff4d0, #ffd86b 40%, #d4a857);
     -webkit-background-clip: text;
     background-clip: text;
@@ -430,7 +430,7 @@
 
   .ornate-divider {
     width: 0;
-    margin: 1.3vh auto 1.3vh;
+    margin: 1vh auto 1vh;
     height: 18px;
     position: relative;
     animation: dividerGrow 1.4s ease-out 4.0s forwards;
@@ -464,8 +464,8 @@
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
     font-style: italic;
-    font-size: clamp(18px, 2.6vh, 30px);
-    line-height: 1.4;
+    font-size: clamp(22px, 2.8vh, 30px);
+    line-height: 1.35;
     color: var(--gold-3);
     opacity: 0;
     animation: fadeUp 1.2s cubic-bezier(.2,.7,.3,1) 4.4s forwards;
@@ -475,11 +475,11 @@
   .body-text {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 500;
-    font-size: clamp(18px, 2.6vh, 30px);
-    line-height: 1.5;
+    font-size: clamp(22px, 2.8vh, 30px);
+    line-height: 1.45;
     color: var(--cream);
-    margin-top: 1.2vh;
-    max-width: 94%;
+    margin-top: 1vh;
+    max-width: 96%;
     opacity: 0;
     animation: fadeUp 1.8s cubic-bezier(.2,.7,.3,1) 5.4s forwards;
     text-shadow: 0 1px 8px rgba(0,0,0,0.7);
@@ -493,7 +493,7 @@
   }
 
   .ornate-divider.small {
-    margin: 1.6vh auto 1.3vh;
+    margin: 1.2vh auto 1vh;
     animation: dividerGrow 1.4s ease-out 7.0s forwards;
   }
 
@@ -505,13 +505,13 @@
   .date-line {
     font-family: 'Cinzel', serif;
     font-weight: 700;
-    font-size: clamp(24px, 3.8vh, 48px);
+    font-size: clamp(28px, 4.0vh, 48px);
     background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 0.1em;
-    margin-bottom: 1.2vh;
+    margin-bottom: 0.4vh;
     text-shadow: 0 0 22px rgba(255, 200, 110, 0.6);
   }
   .date-line .sep {
@@ -522,11 +522,22 @@
     font-size: 0.85em;
   }
 
+  .date-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vh, 28px);
+    color: var(--gold-3);
+    letter-spacing: 0.05em;
+    margin-bottom: 1vh;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 200, 110, 0.3);
+  }
+
   .venue {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 700;
     font-style: italic;
-    font-size: clamp(20px, 3.0vh, 36px);
+    font-size: clamp(24px, 3.2vh, 38px);
     color: var(--cream);
     margin-bottom: 0.7vh;
     text-shadow: 0 0 14px rgba(255, 200, 110, 0.4), 0 1px 6px rgba(0,0,0,0.7);
@@ -535,7 +546,7 @@
   .address {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
-    font-size: clamp(17px, 2.55vh, 30px);
+    font-size: clamp(20px, 2.7vh, 30px);
     color: #fff8e3;
     opacity: 1;
     letter-spacing: 0.03em;
@@ -1204,7 +1215,8 @@
 
       <div class="details">
         <div class="date-line">4 шілде <span class="sep">◆</span> 17:00</div>
-        <div class="venue">«Самир» мейрамханасы</div>
+        <div class="date-sub">2026 жыл, сенбі күні</div>
+        <div class="venue">«Самир 1» мейрамханасы</div>
         <div class="address">Алматы қ., Егінсу көшесі, 29/11А, 2-қабат</div>
       </div>
     </div>
