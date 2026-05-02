@@ -1218,10 +1218,10 @@
 </audio>
 
 <!-- Start overlay (required to play audio in browsers) -->
-<div class="start-overlay" id="startOverlay">
+<div class="start-overlay" id="startOverlay" onclick="startInvitation()">
   <div class="start-overlay-title">Сағибек<br><span style="font-size:0.7em">— 80 жас —</span></div>
-  <button class="start-btn" id="startBtn" aria-label="Бастау">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <button class="start-btn" id="startBtn" aria-label="Бастау" onclick="event.stopPropagation(); startInvitation();" ontouchend="event.preventDefault(); event.stopPropagation(); startInvitation();">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="pointer-events:none">
       <path d="M8 5v14l11-7z"/>
     </svg>
   </button>
@@ -1446,46 +1446,40 @@
   }
 
   function startInvitation() {
+    console.log('[startInvitation] called, started=', started);
     if (started) return;
     started = true;
-    const overlay = document.getElementById('startOverlay');
-    overlay.classList.add('hidden');
-    setTimeout(() => overlay.style.display = 'none', 900);
-
-    replay();
-    audio.play().catch(err => {
-      console.log('Audio playback blocked or music.mp3 missing:', err);
-    });
-
-    cycleStartTime = Date.now();
-    scheduleNextCycle(CYCLE_MS);
-  }
-
-  // Robust click/tap handler for both desktop and mobile
-  function attachStartHandlers() {
-    const btn = document.getElementById('startBtn');
-    const ov  = document.getElementById('startOverlay');
-    const handler = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      startInvitation();
-    };
-    ['click', 'touchend', 'pointerup'].forEach(ev => {
-      btn.addEventListener(ev, handler, { passive: false });
-      ov.addEventListener(ev, (e) => {
-        if (started) return;
-        startInvitation();
-      });
-    });
-    // Keyboard accessibility (Space / Enter)
-    document.addEventListener('keydown', (e) => {
-      if (!started && (e.code === 'Space' || e.code === 'Enter')) {
-        e.preventDefault();
-        startInvitation();
+    try {
+      const overlay = document.getElementById('startOverlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+        setTimeout(() => { overlay.style.display = 'none'; }, 900);
       }
-    });
+
+      replay();
+
+      if (audio) {
+        audio.play().catch(err => {
+          console.log('Audio playback blocked or music.mp3 missing:', err);
+        });
+      }
+
+      cycleStartTime = Date.now();
+      scheduleNextCycle(CYCLE_MS);
+    } catch (e) {
+      console.error('startInvitation error:', e);
+    }
   }
-  attachStartHandlers();
+  // Make startInvitation globally accessible for inline onclick handlers
+  window.startInvitation = startInvitation;
+
+  // Keyboard accessibility (Space / Enter to start)
+  document.addEventListener('keydown', (e) => {
+    if (!started && (e.code === 'Space' || e.code === 'Enter')) {
+      e.preventDefault();
+      startInvitation();
+    }
+  });
 
   function toggleMute() {
     const btn = document.getElementById('muteBtn');
